@@ -24,7 +24,9 @@ class _HomeScreenState extends State<HomeScreen> {
         operation.clear();
         break;
       case 'ANS':
-        print(operation.hasil);
+        if (operation.bracketsOpen == 0) {
+          print(operation.hasil);
+        }
         break;
       default:
         operation.add(text);
@@ -46,35 +48,41 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final operation = Provider.of<Operation>(context);
 
+    // String expression = '(6+2)+(6+2)';
+    // Parser pars = Parser();
+    // ContextModel cm = ContextModel();
+    // Expression ex = pars.parse(expression);
+    // double hasil = ex.evaluate(EvaluationType.REAL, cm);
+    // print(hasil);
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       body: Column(
         mainAxisSize: MainAxisSize.max,
         children: [
           Expanded(
-            child: Container(
-              margin: EdgeInsets.only(top: 20),
-              padding: EdgeInsets.all(30),
-              alignment: Alignment.centerRight,
-              child: Column(
-                children: [
-                  FittedBox(
-                    fit: BoxFit.fitWidth,
-                    child: Text(
+            child: FittedBox(
+              child: Container(
+                margin: EdgeInsets.only(top: 20),
+                padding: EdgeInsets.all(30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
                       operation.expression,
                       style: TextStyle(
                         fontSize: 40,
                       ),
                     ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text(
-                    '',
-                    style: TextStyle(fontSize: 10, color: Colors.black54),
-                  ),
-                ],
+                    SizedBox(
+                      height: 10,
+                    ),
+                    Text(
+                      '',
+                      style: TextStyle(fontSize: 10, color: Colors.black54),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
