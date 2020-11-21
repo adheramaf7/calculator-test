@@ -1,38 +1,51 @@
-import './../widgets/calculator_button.dart';
+import 'package:math_expressions/math_expressions.dart';
+import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
+import './../providers/operation.dart';
+import './../widgets/calculator_button.dart';
 
-class HomeScreen extends StatelessWidget {
-  static const List<String> BUTTON_LIST = [
-    'C',
-    'DEL',
-    '( )',
-    '/',
-    '7',
-    '8',
-    '9',
-    'x',
-    '4',
-    '5',
-    '6',
-    '-',
-    '1',
-    '2',
-    '3',
-    '+',
-    '0',
-    '00',
-    ',',
-    '=',
-  ];
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
 
-  static const OPERATOR_LIST = ['( )', '/', 'x', '-', '+', '='];
+class _HomeScreenState extends State<HomeScreen> {
+  final buttonList = Operation.BUTTON_LIST;
+  final operatorList = Operation.OPERATOR_LIST;
+  final actionButtonColor = Operation.ACTION_BUTTON_COLOR;
 
-  bool _isOperator(String text) {
-    return OPERATOR_LIST.contains(text);
+  void _buttonTap(String text) {
+    final operation = Provider.of<Operation>(context, listen: false);
+    switch (text) {
+      case 'DEL':
+        operation.delete();
+        break;
+      case 'C':
+        operation.clear();
+        break;
+      case 'ANS':
+        print(operation.hasil);
+        break;
+      default:
+        operation.add(text);
+    }
+  }
+
+  Color _buttonColor(String text) {
+    if (actionButtonColor.containsKey(text)) {
+      return actionButtonColor[text];
+    }
+    if (operatorList.contains(text)) {
+      return Colors.blueGrey[900];
+    }
+
+    return Colors.blueGrey[400];
   }
 
   @override
   Widget build(BuildContext context) {
+    final operation = Provider.of<Operation>(context);
+
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       body: Column(
@@ -45,17 +58,20 @@ class HomeScreen extends StatelessWidget {
               alignment: Alignment.centerRight,
               child: Column(
                 children: [
-                  Text(
-                    '0',
-                    style: TextStyle(
-                      fontSize: 40,
+                  FittedBox(
+                    fit: BoxFit.fitWidth,
+                    child: Text(
+                      operation.expression,
+                      style: TextStyle(
+                        fontSize: 40,
+                      ),
                     ),
                   ),
                   SizedBox(
                     height: 10,
                   ),
                   Text(
-                    'nol',
+                    '',
                     style: TextStyle(fontSize: 10, color: Colors.black54),
                   ),
                 ],
@@ -68,14 +84,11 @@ class HomeScreen extends StatelessWidget {
                 child: GridView.builder(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemCount: BUTTON_LIST.length,
+              itemCount: buttonList.length,
               itemBuilder: (BuildContext context, int index) => CalculatorButon(
-                text: BUTTON_LIST[index],
-                color: _isOperator(BUTTON_LIST[index])
-                    ? Colors.blueGrey[900]
-                    : (index == 0
-                        ? Colors.green
-                        : (index == 1 ? Colors.red : Colors.blueGrey[400])),
+                callback: () => _buttonTap(buttonList[index]),
+                text: buttonList[index],
+                color: _buttonColor(buttonList[index]),
                 textColor: Colors.white,
               ),
             )),
