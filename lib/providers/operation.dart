@@ -35,10 +35,12 @@ class Operation with ChangeNotifier {
   };
   String _expression = '';
   int _bracketsOpen = 0;
+  bool _answerMode = false;
 
   String get expression => _expression;
   int get expressionLength => _expression.length;
   int get bracketsOpen => _bracketsOpen;
+  bool get answerMode => _answerMode;
 
   String get lastChar =>
       expressionLength > 0 ? _expression.substring(expressionLength - 1) : '';
@@ -47,13 +49,15 @@ class Operation with ChangeNotifier {
     if (_expression == '') {
       return 0;
     }
-    String expression = _expression.replaceAll('x', '*');
-    expression = expression.replaceAll(',', '.');
-    Parser pars = Parser();
-    ContextModel cm = ContextModel();
-    Expression ex = pars.parse(expression);
-    double hasil = ex.evaluate(EvaluationType.REAL, cm);
-    return hasil;
+    try {
+      String expression = _expression.replaceAll('x', '*');
+      expression = expression.replaceAll(',', '.');
+      Parser pars = Parser();
+      ContextModel cm = ContextModel();
+      Expression ex = pars.parse(expression);
+      double hasil = ex.evaluate(EvaluationType.REAL, cm);
+      return hasil;
+    } catch (e) {}
   }
 
   String get terbilang {
@@ -98,11 +102,11 @@ class Operation with ChangeNotifier {
       return;
     }
 
-    if (text == '(') {
+    if (lastChar == '(') {
       return;
     }
 
-    if (text == ',') {
+    if (lastChar == ',') {
       return;
     }
 
@@ -211,7 +215,13 @@ class Operation with ChangeNotifier {
   }
 
   void clear() {
+    _answerMode = false;
     _expression = '';
+    notifyListeners();
+  }
+
+  void answer() {
+    _answerMode = true;
     notifyListeners();
   }
 

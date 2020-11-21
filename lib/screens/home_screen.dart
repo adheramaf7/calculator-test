@@ -24,9 +24,7 @@ class _HomeScreenState extends State<HomeScreen> {
         operation.clear();
         break;
       case 'ANS':
-        if (operation.bracketsOpen == 0) {
-          print(operation.hasil);
-        }
+        operation.answer();
         break;
       default:
         operation.add(text);
@@ -59,30 +57,43 @@ class _HomeScreenState extends State<HomeScreen> {
       backgroundColor: Colors.blueGrey[50],
       body: Column(
         mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.end,
         children: [
           Expanded(
-            child: FittedBox(
-              child: Container(
-                margin: EdgeInsets.only(top: 20),
-                padding: EdgeInsets.all(30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      operation.expression,
-                      style: TextStyle(
-                        fontSize: 40,
+            child: Container(
+              padding: EdgeInsets.all(20),
+              alignment: Alignment.bottomRight,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: FittedBox(
+                      child: Text(
+                        operation.answerMode
+                            ? operation.hasil.toString()
+                            : (operation.expressionLength > 0
+                                ? operation.expression
+                                : ' '),
+                        style: TextStyle(fontSize: 26),
                       ),
                     ),
-                    SizedBox(
-                      height: 10,
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      operation.answerMode ? operation.expression : ' ',
+                      style: TextStyle(color: Colors.black45),
                     ),
-                    Text(
-                      '',
-                      style: TextStyle(fontSize: 10, color: Colors.black54),
+                  ),
+                  Container(
+                    alignment: Alignment.bottomRight,
+                    child: Text(
+                      operation.answerMode ? operation.terbilang : ' ',
+                      style: TextStyle(color: Colors.black45),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
