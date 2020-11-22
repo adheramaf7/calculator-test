@@ -70,6 +70,10 @@ class Operation with ChangeNotifier {
   }
 
   void add(String text) {
+    if (_answerMode) {
+      return;
+    }
+
     if (Operation.OPERATOR_LIST.contains(text)) {
       return _addOperation(text);
     }
@@ -215,6 +219,10 @@ class Operation with ChangeNotifier {
   }
 
   void delete() {
+    if (_answerMode) {
+      return;
+    }
+
     int length = _expression.length;
     if (length > 0) {
       if (this.lastChar == '(') {
@@ -232,6 +240,10 @@ class Operation with ChangeNotifier {
   }
 
   void answer() {
+    if (_answerMode) {
+      return;
+    }
+
     if (this.hasil != null) {
       _answerMode = true;
       notifyListeners();
