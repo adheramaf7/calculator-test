@@ -80,16 +80,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
-                  child: Text(
-                    operation.answerMode ? operation.expression : ' ',
-                    style: TextStyle(color: Colors.black45),
+                  child: FittedBox(
+                    child: Text(
+                      operation.answerMode ? operation.expression : ' ',
+                      style: TextStyle(color: Colors.black45),
+                    ),
                   ),
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
-                  child: Text(
-                    operation.answerMode ? operation.terbilang : ' ',
-                    style: TextStyle(color: Colors.black45),
+                  child: FittedBox(
+                    child: Text(
+                      operation.answerMode ? operation.terbilang : ' ',
+                      style: TextStyle(color: Colors.black45),
+                    ),
                   ),
                 ),
               ],

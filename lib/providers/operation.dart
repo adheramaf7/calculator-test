@@ -66,6 +66,11 @@ class Operation with ChangeNotifier {
 
   String get terbilang {
     Terbilang terbilang = Terbilang();
+    if (this.hasil > 999999999) {
+      return this.hasil % 1 == 0.0
+          ? this.hasil.floor().toString()
+          : this.hasil.toString();
+    }
     return this.hasil != null ? terbilang.make(number: this.hasil) : ' ';
   }
 
