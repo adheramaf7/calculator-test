@@ -78,6 +78,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
+                SizedBox(
+                  height: 8,
+                ),
                 Container(
                   alignment: Alignment.bottomRight,
                   child: FittedBox(
@@ -86,6 +89,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(color: Colors.black45),
                     ),
                   ),
+                ),
+                SizedBox(
+                  height: 8,
                 ),
                 Container(
                   alignment: Alignment.bottomRight,
