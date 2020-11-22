@@ -36,6 +36,7 @@ class Operation with ChangeNotifier {
   String _expression = '';
   int _bracketsOpen = 0;
   bool _answerMode = false;
+  bool _pointOpen = false;
 
   String get expression => _expression;
   int get expressionLength => _expression.length;
@@ -46,6 +47,7 @@ class Operation with ChangeNotifier {
       expressionLength > 0 ? _expression.substring(expressionLength - 1) : '';
 
   double get hasil {
+    double hasil;
     if (_expression == '') {
       return 0;
     }
@@ -55,9 +57,9 @@ class Operation with ChangeNotifier {
       Parser pars = Parser();
       ContextModel cm = ContextModel();
       Expression ex = pars.parse(expression);
-      double hasil = ex.evaluate(EvaluationType.REAL, cm);
-      return hasil;
+      hasil = ex.evaluate(EvaluationType.REAL, cm);
     } catch (e) {}
+    return hasil;
   }
 
   String get terbilang {
@@ -110,6 +112,7 @@ class Operation with ChangeNotifier {
       return;
     }
 
+    _pointOpen = false;
     _expression += text;
     notifyListeners();
     return;
@@ -182,7 +185,12 @@ class Operation with ChangeNotifier {
   _pointHandler(String text) {
     if (this.expressionLength == 0) {
       _expression += '0,';
+      _pointOpen = true;
       notifyListeners();
+      return;
+    }
+
+    if (_pointOpen) {
       return;
     }
 
@@ -194,11 +202,13 @@ class Operation with ChangeNotifier {
 
     if (Operation.OPERATOR_LIST.contains(lastChar) && lastChar != ')') {
       _expression += '0,';
+      _pointOpen = true;
       notifyListeners();
       return;
     }
 
     _expression += text;
+    _pointOpen = true;
     notifyListeners();
     return;
   }

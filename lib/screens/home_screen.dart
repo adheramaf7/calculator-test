@@ -59,48 +59,46 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          Expanded(
-            child: Container(
-              padding: EdgeInsets.all(20),
-              alignment: Alignment.bottomRight,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: FittedBox(
-                      child: Text(
-                        operation.answerMode
-                            ? operation.hasil.toString()
-                            : (operation.expressionLength > 0
-                                ? operation.expression
-                                : ' '),
-                        style: TextStyle(fontSize: 26),
-                      ),
-                    ),
-                  ),
-                  Container(
-                    alignment: Alignment.bottomRight,
+          Container(
+            height: MediaQuery.of(context).size.height * 0.25,
+            padding: EdgeInsets.all(20),
+            alignment: Alignment.bottomRight,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  alignment: Alignment.bottomRight,
+                  child: FittedBox(
                     child: Text(
-                      operation.answerMode ? operation.expression : ' ',
-                      style: TextStyle(color: Colors.black45),
+                      operation.answerMode
+                          ? operation.hasil.toString()
+                          : (operation.expressionLength > 0
+                              ? operation.expression
+                              : ' '),
+                      style: TextStyle(fontSize: 40),
                     ),
                   ),
-                  Container(
-                    alignment: Alignment.bottomRight,
-                    child: Text(
-                      operation.answerMode ? operation.terbilang : ' ',
-                      style: TextStyle(color: Colors.black45),
-                    ),
+                ),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    operation.answerMode ? operation.expression : ' ',
+                    style: TextStyle(color: Colors.black45),
                   ),
-                ],
-              ),
+                ),
+                Container(
+                  alignment: Alignment.bottomRight,
+                  child: Text(
+                    operation.answerMode ? operation.terbilang : ' ',
+                    style: TextStyle(color: Colors.black45),
+                  ),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            flex: 3,
-            child: Container(
-                child: GridView.builder(
+          Container(
+            height: MediaQuery.of(context).size.height * 0.75,
+            child: GridView.builder(
               gridDelegate:
                   SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
               itemCount: buttonList.length,
@@ -110,7 +108,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: _buttonColor(buttonList[index]),
                 textColor: Colors.white,
               ),
-            )),
+            ),
           ),
         ],
       ),
