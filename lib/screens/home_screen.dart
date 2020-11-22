@@ -1,4 +1,3 @@
-import 'package:math_expressions/math_expressions.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter/material.dart';
 import './../providers/operation.dart';
@@ -45,14 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final operation = Provider.of<Operation>(context);
-
-    // String expression = '(6+2)+(6+2)';
-    // Parser pars = Parser();
-    // ContextModel cm = ContextModel();
-    // Expression ex = pars.parse(expression);
-    // double hasil = ex.evaluate(EvaluationType.REAL, cm);
-    // print(hasil);
-
     return Scaffold(
       backgroundColor: Colors.blueGrey[50],
       body: Column(
