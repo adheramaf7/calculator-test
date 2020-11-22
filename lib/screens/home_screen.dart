@@ -101,7 +101,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           Expanded(
             child: Container(
+              alignment: Alignment.bottomCenter,
+              height: double.infinity,
               child: GridView.builder(
+                shrinkWrap: true,
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 4),
                 itemCount: buttonList.length,
