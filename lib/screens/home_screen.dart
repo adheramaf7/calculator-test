@@ -41,6 +41,14 @@ class _HomeScreenState extends State<HomeScreen> {
     return Colors.blueGrey[400];
   }
 
+  String _showHasil(double hasil) {
+    print(hasil.toString());
+    double mod = hasil % 1;
+    return mod != 0.0
+        ? hasil.toString().replaceAll('.', ',')
+        : hasil.floor().toString();
+  }
+
   @override
   Widget build(BuildContext context) {
     final operation = Provider.of<Operation>(context);
@@ -62,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: FittedBox(
                     child: Text(
                       operation.answerMode
-                          ? operation.hasil.toString()
+                          ? _showHasil(operation.hasil)
                           : (operation.expressionLength > 0
                               ? operation.expression
                               : ' '),
@@ -87,17 +95,19 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          Container(
-            height: MediaQuery.of(context).size.height * 0.75,
-            child: GridView.builder(
-              gridDelegate:
-                  SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 4),
-              itemCount: buttonList.length,
-              itemBuilder: (BuildContext context, int index) => CalculatorButon(
-                callback: () => _buttonTap(buttonList[index]),
-                text: buttonList[index],
-                color: _buttonColor(buttonList[index]),
-                textColor: Colors.white,
+          Expanded(
+            child: Container(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 4),
+                itemCount: buttonList.length,
+                itemBuilder: (BuildContext context, int index) =>
+                    CalculatorButon(
+                  callback: () => _buttonTap(buttonList[index]),
+                  text: buttonList[index],
+                  color: _buttonColor(buttonList[index]),
+                  textColor: Colors.white,
+                ),
               ),
             ),
           ),
