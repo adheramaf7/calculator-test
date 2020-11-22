@@ -49,7 +49,7 @@ class Operation with ChangeNotifier {
   double get hasil {
     double hasil;
     if (_expression == '') {
-      return 0;
+      return hasil;
     }
     try {
       String expression = _expression.replaceAll('x', '*');
@@ -58,14 +58,15 @@ class Operation with ChangeNotifier {
       ContextModel cm = ContextModel();
       Expression ex = pars.parse(expression);
       hasil = ex.evaluate(EvaluationType.REAL, cm);
-    } catch (e) {}
+    } catch (e) {
+      print(e);
+    }
     return hasil;
   }
 
   String get terbilang {
     Terbilang terbilang = Terbilang();
-    double hasil = this.hasil;
-    return terbilang.make(number: hasil);
+    return this.hasil != null ? terbilang.make(number: this.hasil) : ' ';
   }
 
   void add(String text) {
@@ -231,8 +232,10 @@ class Operation with ChangeNotifier {
   }
 
   void answer() {
-    _answerMode = true;
-    notifyListeners();
+    if (this.hasil != null) {
+      _answerMode = true;
+      notifyListeners();
+    }
   }
 
   bool _isNumeric(String text) {
