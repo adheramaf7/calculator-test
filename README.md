@@ -1,6 +1,6 @@
-# calculator_test
+# Calculator Test
 
-A new Flutter project.
+Aplikasi Kalkulator yang dibuat menggunakan flutter dengan memanfaatkan provider sebagai state management.
 
 ## Getting Started
 
